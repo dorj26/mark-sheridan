@@ -5,6 +5,7 @@ import CustomLoader from "./custom_loader";
 import fileIcon from "../assets/file_icon.svg";
 import DownloadRoundedIcon from "@mui/icons-material/DownloadRounded";
 import ToastMessage from "./toast_message";
+import { postForm } from "../config/axiosClient";
 
 const UploadField = () => {
     const [file, setFile] = useState<any | {}>({});
@@ -35,7 +36,17 @@ const UploadField = () => {
 
     const handeClickUpload = () => {
         setOpenCustomLoader(true);
+        let formData = new FormData();
+        formData.set("file", file);
         // api goes here.
+        postForm("", formData).then((res: any) => {
+            console.log(res);
+
+            setShowToastMessage(true);
+            setSeverity("success");
+            setToastMessage("Your file is ready for download");
+            return;
+        });
         setTimeout(() => {
             let tempObj: any = { name: file?.name };
             // remove setTimeout. In response of Api, store file in uploadFile state.
