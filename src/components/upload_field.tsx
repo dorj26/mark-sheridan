@@ -38,8 +38,7 @@ const UploadField = () => {
         setOpenCustomLoader(true);
         let formData = new FormData();
         formData.set("file", file);
-        // api goes here.
-        postForm("", formData).then((res: any) => {
+        postForm("upload", formData).then((res: any) => {
             console.log(res);
 
             setShowToastMessage(true);
@@ -47,13 +46,18 @@ const UploadField = () => {
             setToastMessage("Your file is ready for download");
             return;
         });
-        setTimeout(() => {
-            let tempObj: any = { name: file?.name };
-            // remove setTimeout. In response of Api, store file in uploadFile state.
-            // Add Toast Message.
-            setUploadedFile(tempObj);
-            setOpenCustomLoader(false);
-        }, 2000);
+
+        // setTimeout(() => {
+        //     let tempObj: any = { name: file?.name };
+        //     // remove setTimeout. In response of Api, store file in uploadFile state.
+        //     // Add Toast Message.
+        //     setUploadedFile(tempObj);
+        //     setOpenCustomLoader(false);
+        //     setShowToastMessage(true);
+        //     setSeverity("success");
+        //     setToastMessage("Your file is ready for download");
+        //     return;
+        // }, 2000);
     };
 
     const handleClickDownload = () => {

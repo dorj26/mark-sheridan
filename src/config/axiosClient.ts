@@ -1,5 +1,5 @@
 import axios from "axios";
-const URL = "";
+const URL = "http://localhost:5000";
 
 export const postForm = async (apiURL: string, data: any, options?: any) => {
     return axios.post(`${URL}/${apiURL}`, data, {
