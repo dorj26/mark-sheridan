@@ -1,19 +1,32 @@
-import { AppBar, Box, Container, Typography } from "@mui/material";
-import logo from "../assets/logo.png";
+import { AppBar, Box, Button, Container, Typography } from "@mui/material";
+import logo from "../assets/kode-logo.png";
+import { useNavigate } from "react-router-dom";
 import React from "react";
 import CustomButton from "./custom_button";
 
 const navbarOptions: any = [
-    { title: "Pricing" },
-    { title: "FAQs" },
-    { title: "Careers" },
-    { title: "Demo" },
+    { title: "Home", route: "/" },
+    { title: "About", route: "/" },
+    { title: "Join", route: "/" },
+    { title: "FAQ", route: "/" },
 ];
 
 const Navbar = () => {
-    const handleClickLogin = () => {};
+    const navigate = useNavigate();
+    const handleClickApply = () => {
+        navigate("/demo");
+    };
+
     return (
-        <AppBar sx={{ height: "72px", background: "#fff", display: "block" }}>
+        <AppBar
+            sx={{
+                height: "100px",
+                background: "#fff",
+                display: "block",
+                position: "unset",
+                boxShadow: "none",
+            }}
+        >
             <Box
                 className="container"
                 sx={{
@@ -24,7 +37,7 @@ const Navbar = () => {
                     width: "100%",
                 }}
             >
-                <Box>
+                <Box sx={{ cursor: "pointer" }} onClick={() => navigate("/")}>
                     <img src={logo} alt="" />
                 </Box>
 
@@ -43,23 +56,23 @@ const Navbar = () => {
                                 height: "48px",
                                 color: "#212427",
                             }}
+                            onClick={() => navigate(option.route)}
                         />
                     ))}
 
-                    <CustomButton
-                        title="Login"
-                        onClick={handleClickLogin}
+                    <Button
                         sx={{
-                            height: "48px",
-                            width: "144px",
-                            background: "#212427",
-                            color: "#fff",
-                            boxShadow: "0px 1px 4px 0px #00000040",
-                            "&:hover": {
-                                backgroundColor: "#212427",
-                            },
+                            boxShadow: "none",
+                            borderRadius: 0,
+                            textTransform: "none",
+                            height: "49px",
+                            fontSize: "18px",
                         }}
-                    />
+                        variant={"contained"}
+                        onClick={handleClickApply}
+                    >
+                        Demo
+                    </Button>
                 </Box>
             </Box>
         </AppBar>

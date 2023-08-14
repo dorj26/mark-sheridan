@@ -6,7 +6,6 @@ const HeroSection = () => {
     return (
         <Box
             sx={{
-                mt: "72px",
                 height: "327px",
                 background: `url(${background})`,
                 backgroundColor: "#fff",
