@@ -3,9 +3,13 @@ import React from "react";
 import DownloadRoundedIcon from "@mui/icons-material/DownloadRounded";
 import fileIcon from "../../assets/alternate_file_icon.svg";
 
-const DownloadFile = () => {
-    const handleClickDownload = () => {};
+interface props {
+    handleClickDownload: any;
+}
 
+const DownloadFile: React.FunctionComponent<props> = ({
+    handleClickDownload,
+}) => {
     return (
         <Box
             sx={{

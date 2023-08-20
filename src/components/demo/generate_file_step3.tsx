@@ -3,13 +3,16 @@ import React from "react";
 
 interface props {
     onSuccessChangeStep: any;
+    handleUploadFile: any;
 }
 
 const GenerateFileStep3: React.FunctionComponent<props> = ({
     onSuccessChangeStep,
+    handleUploadFile,
 }) => {
     const handleClickGenerateFile = () => {
         onSuccessChangeStep();
+        handleUploadFile();
     };
     return (
         <>

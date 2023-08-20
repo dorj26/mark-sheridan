@@ -9,6 +9,7 @@ import UploadFile1 from "./demo/upload_file1";
 import GenerateFileStep3 from "./demo/generate_file_step3";
 import UploadFile2 from "./demo/upload_file2";
 import DownloadFile from "./demo/download_file";
+import { postForm } from "../config/axiosClient";
 
 const steps = ["Upload 1st file", "Upload 2nd file", "Generate"];
 
@@ -18,6 +19,10 @@ const UploadField = () => {
     const [toastMessage, setToastMessage] = useState<string>("");
     const [severity, setSeverity] = useState<any>(undefined);
     const [showToastMessage, setShowToastMessage] = useState<boolean>(false);
+    const [first_file, set_first_file] = useState<any>({});
+    const [second_file, set_second_file] = useState<any>({});
+
+    const [downloadFile, setDownloadFile] = useState<any>({});
 
     // Stepper Values
     const [activeStep, setActiveStep] = useState<number>(0);
@@ -68,6 +73,41 @@ const UploadField = () => {
         setShowToastMessage(false);
         setToastMessage("");
         setSeverity(undefined);
+    };
+
+    const handleUploadFile = () => {
+        setOpenCustomLoader(true);
+        let formData = new FormData();
+        formData.set("file_1", first_file);
+        formData.set("file_2", second_file);
+        postForm("upload", formData).then((res: any) => {
+            let blob = new Blob([res.data], {
+                type: "text/csv",
+            });
+            console.log(res);
+            setDownloadFile(blob);
+            setShowToastMessage(true);
+            setSeverity("success");
+            setToastMessage("Your file is ready for download");
+            setOpenCustomLoader(false);
+            return;
+        });
+    };
+
+    const handleClickDownload = () => {
+        // Download api goes here.
+        const url = window.URL.createObjectURL(downloadFile);
+
+        // Create a temporary link element
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = "data.csv";
+
+        // Trigger the download
+        link.click();
+
+        // Clean up the temporary URL
+        URL.revokeObjectURL(url);
     };
 
     return (
@@ -141,6 +181,7 @@ const UploadField = () => {
                             setOpenCustomLoader={setOpenCustomLoader}
                             setSeverity={setSeverity}
                             setToastMessage={setToastMessage}
+                            saveFirstFile={(obj: any) => set_first_file(obj)}
                         />
                     ) : null}
                     {activeStep === 1 ? (
@@ -150,15 +191,21 @@ const UploadField = () => {
                             setOpenCustomLoader={setOpenCustomLoader}
                             setSeverity={setSeverity}
                             setToastMessage={setToastMessage}
+                            saveSecondFile={(obj: any) => set_second_file(obj)}
                         />
                     ) : null}
                     {activeStep === 2 ? (
                         <GenerateFileStep3
                             onSuccessChangeStep={handleComplete}
+                            handleUploadFile={handleUploadFile}
                         />
                     ) : null}
 
-                    {allStepsCompleted() ? <DownloadFile /> : null}
+                    {allStepsCompleted() ? (
+                        <DownloadFile
+                            handleClickDownload={handleClickDownload}
+                        />
+                    ) : null}
                 </Box>
             </Box>
             <ToastMessage

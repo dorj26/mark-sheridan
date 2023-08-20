@@ -10,6 +10,7 @@ interface props {
     setToastMessage: any;
     setOpenCustomLoader: any;
     onSuccessChangeStep: any;
+    saveFirstFile: any;
 }
 
 const UploadFile1: React.FunctionComponent<props> = ({
@@ -18,6 +19,7 @@ const UploadFile1: React.FunctionComponent<props> = ({
     setToastMessage,
     setOpenCustomLoader,
     onSuccessChangeStep,
+    saveFirstFile,
 }) => {
     const [file, setFile] = useState<any | {}>({});
     const [uploadedFile, setUploadedFile] = useState<any | {}>({});
@@ -51,6 +53,7 @@ const UploadFile1: React.FunctionComponent<props> = ({
             setShowToastMessage(true);
             setSeverity("success");
             onSuccessChangeStep();
+            saveFirstFile(tempObj);
             setToastMessage("Please upload the second file");
             return;
         }, 2000);
